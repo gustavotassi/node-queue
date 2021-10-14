@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { add } from '../lib/Queue';
 
 export async function store(req: Request, res: Response) {
     const { name, email, password } = req.body;
@@ -8,6 +9,8 @@ export async function store(req: Request, res: Response) {
         email,
         password,
     };
+
+    await add('RegistrationMail', { user });
 
     return res.json(user);
 }
